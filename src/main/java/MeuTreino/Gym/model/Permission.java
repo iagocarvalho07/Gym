@@ -1,6 +1,7 @@
 package MeuTreino.Gym.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +30,20 @@ public class Permission implements GrantedAuthority,  Serializable {
 	
 	@Column
 	private String description;
+	
+	
+
+	@ManyToMany(mappedBy ="permissions")
+	private List<UserModel> usuarios;
+	
+
+	public List<UserModel> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<UserModel> usuarios) {
+		this.usuarios = usuarios;
+	}
 
 	@Override
 	public String getAuthority() {
@@ -35,6 +51,13 @@ public class Permission implements GrantedAuthority,  Serializable {
 	}
 
 	public Permission() {}
+	
+	
+
+	public Permission(Long id, String description) {
+		this.id = id;
+		this.description = description;
+	}
 
 	public Long getId() {
 		return id;
